@@ -1,0 +1,107 @@
+Proceso TaquillaCine
+	
+    // Variables
+    Definir opcion, cantidad, total, edad, precioFinal, i Como Entero;
+    Definir ventas_ninos, ventas_generales, cantidad_ninos, cantidad_general Como Entero;
+	Definir opcion_peli Como Entero;
+	Definir precio_general, precio_ninos_adultos, cargo_servicio, subtotal, total_ventas Como Real;
+    Definir claveSecreta, intentoClave Como Cadena
+	
+    // Precios de las entradas
+    precio_ninos_adultos <- 2500;
+    precio_general <- 3000;
+    cargo_servicio <- 500;
+    
+	// Inicializar contadores
+    ventas_ninos <- 0;
+    ventas_generales <- 0;
+    total_ventas <- 0;
+	
+    claveSecreta <- "admin123"; // Clave para ver el resumen
+	
+	// cartelera
+	Limpiar Pantalla;
+	Escribir "===========================================";
+	Escribir "       BIENVENIDO A LA CARTELERA DEL CINE     ";
+	Escribir "===========================================";
+	Escribir "Películas disponibles:";
+	Escribir "1. Avengers: Endgame";
+	Escribir "2. El Rey León (2019)";
+	Escribir "3. Joker";
+	
+	// selección de película
+	Repetir
+		Escribir "Seleccione el número de la película que desea ver (1-3):";
+		Leer opcion_peli;
+	Hasta Que opcion_peli >= 1 Y opcion_peli <= 3
+	
+    // Menú de entradas
+    Repetir
+        Limpiar Pantalla;
+        Escribir "==========================================";
+        Escribir "         TAQUILLA DE CINE - MENÚ          ";
+        Escribir "==========================================";
+        Escribir "TIPOS DE ENTRADA:";
+		Escribir "1. Comprar entradas (Niños/Adultos mayores - General)";
+        Escribir "2. Salir";
+        Escribir "------------------------------------------";
+        Escribir "Seleccione una opción: ";
+        Leer opcion;
+		
+        Segun opcion Hacer
+            1:
+                // cantidad de entradas para niños/adultos mayores
+                Repetir
+                    Escribir "Ingrese la cantidad de entradas para Niños y Adultos mayores:";
+                    Leer cantidad_ninos;
+                    Si cantidad_ninos < 0 Entonces
+                        Escribir "La cantidad no puede ser negativa. Intente nuevamente.";
+                    FinSi
+                Hasta Que cantidad_ninos >= 0
+				
+                // entradas generales
+                Repetir
+                    Escribir "Ingrese la cantidad de entradas para General Adultos:";
+                    Leer cantidad_general;
+                    Si cantidad_general < 0 Entonces
+                        Escribir "La cantidad no puede ser negativa. Intente nuevamente.";
+                    FinSi
+                Hasta Que cantidad_general >= 0
+				
+                // subtotal
+                subtotal <- (cantidad_ninos * (precio_ninos_adultos + cargo_servicio)) + (cantidad_general * (precio_general + cargo_servicio));
+                
+                // ventas
+                ventas_ninos <- ventas_ninos + cantidad_ninos;
+                ventas_generales <- ventas_generales + cantidad_general;
+                total_ventas <- total_ventas + subtotal;
+				
+                Escribir "Compra realizada con éxito.";
+                Escribir "Subtotal de esta compra: ", subtotal, " colones.";
+                Esperar Tecla;
+            2:
+                Escribir "Gracias por visitar nuestra taquilla.";
+                Esperar Tecla;
+            De Otro Modo:
+                // acceder al resumen de ventas
+                Escribir "Ingrese la clave secreta (o presione Enter para cancelar):";
+                Leer intentoClave;
+                Si intentoClave = claveSecreta Entonces
+                    Limpiar Pantalla;
+                    Escribir "==========================================";
+                    Escribir "           RESUMEN DE VENTAS              ";
+                    Escribir "==========================================";
+                    Escribir "Entradas Niños/Adultos mayores vendidas: ", ventas_ninos;
+                    Escribir "Entradas Generales vendidas: ", ventas_generales;
+                    Escribir "Total recaudado: ", total_ventas, " colones.";
+                    Esperar Tecla;
+                SiNo
+                    Escribir "Opción no válida.";
+                    Esperar Tecla;
+                FinSi
+        FinSegun
+		
+    Hasta Que opcion = 2
+
+FinProceso
+
